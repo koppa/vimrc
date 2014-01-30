@@ -71,8 +71,8 @@
   set bs=2 fo=cqrt ls=2 shm=at ww=<,>,h,l
 " set bs=2 fo=cqrt ls=2 shm=at tw=72 ww=<,>,h,l
   set comments=b:#,:%,fb:-,n:>,n:)
-"  set list listchars=tab:»·,trail:·
-  set listchars=eol:$,precedes:«,extends:»,tab:»·,trail:·
+"  set list listchars=tab:Â»Â·,trail:Â·
+  set listchars=eol:$,precedes:Â«,extends:Â»,tab:Â»Â·,trail:Â·
   set viminfo=%,'50,\"100,:100,n~/.viminfo
   set tags=./tags,./TAGS,tags,TAGS,../tags,../../tags,../../../tags,../../../../tags
 
@@ -104,7 +104,7 @@
   map ,L  1G/Latest change:\s*/e+1<CR>CYDATE<ESC>
 
 " the shell in a box mode. found in posting by Stefan `Sec` Zehl
-" in newsgroup de.alt.sysadmin.recovery, msg­id:  <df7lhe$2hup$1@ice.42.org>
+" in newsgroup de.alt.sysadmin.recovery, msgÂ­id:  <df7lhe$2hup$1@ice.42.org>
 " Requires zsh for "print -P $PS1" / replace if needed.
 " Your prompt should end in > (and only contain one)
 " so run something like:
@@ -169,7 +169,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" Automatisches einfügen von tabs nach einrückenung vorheriger Zeile
+" Automatisches einfÃ¼gen von tabs nach einrÃ¼ckenung vorheriger Zeile
 set smarttab
 set colorcolumn=80
 
@@ -263,3 +263,42 @@ map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 
 " highlight hits, when searching
 set hlsearch
+
+
+" enable markdown2ctags
+" Add support for markdown files in tagbar.
+let g:tagbar_type_markdown = {
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : '~/.vim/bundle/markdown2ctags/markdown2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+\ }
+let g:tagbar_type_mark = {
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : '~/.vim/bundle/markdown2ctags/markdown2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+\ }
+
+
+set linebreak
+set showbreak=â†ª
+
+" always show 2 lines at the edges of the screen
+set scrolloff=2
