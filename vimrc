@@ -2,7 +2,7 @@
 
 " Now we set some defaults for the editor
   set autoindent        " always set autoindenting on
-" set linebreak         " Don't wrap words by default
+  set linebreak         " Don't wrap words by default
   set textwidth=0       " Don't wrap lines by default
   set nobackup          " Don't keep a backup file
   set viminfo='20,\"50  " read/write a .viminfo file, don't store more than
@@ -14,11 +14,8 @@
 " These are files we are not likely to want to edit or read.
   set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-" Vim5 and later versions support syntax highlighting.
-" Just load the main syntax file when Vim was compiled with "+syntax".
-  if has("syntax")
-     syntax on
-  endif
+" enable syntax highlighting
+  syntax on
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
@@ -31,37 +28,18 @@
 "     \| exe "normal g'\"" | endif
 " endif
 
-" Uncomment the following to have Vim load indentation rules according to the
-" detected filetype. Per default Debian Vim only load filetype specific
-" plugins.
-" if has("autocmd")
-"   filetype indent on
-" endif
-
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
   set showcmd           " Show (partial) command in status line.
   set showmatch         " Show matching brackets.
-" set ignorecase        " Do case insensitive matching
 " set smartcase         " Do smart case matching
 " set incsearch         " Incremental search
-" set autowrite         " Automatically save before commands like :next and :make
-" When switching between different buffers you can't use undo without 'set hidden':
+  set autowrite         " Automatically save before commands like :next and :make
   set hidden            " Hide buffers when they are abandoned
-  set mouse=a           " Enable mouse usage (all modes) in terminals
   set wildmenu          " command-line completion operates in an enhanced mode
 
   set pastetoggle=<f11>               " don't change text when copy/pasting
   set dictionary=/usr/share/dict/word " used with CTRL-X CTRL-K
-
-""" set the screen hardstatus to vim(filename.ext)
-  if ((&term =~ '^screen') && ($VIM_PLEASE_SET_TITLE =~ '^yes$') || has('gui_running'))
-    set t_ts=k
-    set t_fs=\
-    set title
-    autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
-    let &titleold = fnamemodify(&shell, ":t")
-  endif
 
 " turn these ON:
   set ek vb
@@ -77,23 +55,11 @@
   set tags=./tags,./TAGS,tags,TAGS,../tags,../../tags,../../../tags,../../../../tags
 
 " autocommands:
-" when the file type is "mail" then set the textwidth to "70":
   if has("autocmd")
-     au FileType mail   set tw=70
 " When editing a file, always jump to the last cursor position
 "  au BufReadPost * if line("'\"") | exe "'\"" | endif
      autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") | exe "normal `\"" | endif
   endif
-
-  if has("syntax")
-     syn on
-  endif
-
-" some useful mappings:
-
-" remove/delete trailing whitespace:
-  nmap ;tr :%s/\s\+$//
-  vmap ;tr  :s/\s\+$//
 
 " execute the command in the current line (minus the first word, which
 " is intended to be a shell prompt) and insert the output in the buffer
@@ -119,7 +85,6 @@
 " Kill quote spaces (when quoting a quote)
   map ,kqs mz:%s/^> >/>>/<cr>
 
-if version >= 700
   " set maximum number of suggestions listed to top 10 items:
   set sps=best,10
 
@@ -146,33 +111,48 @@ if version >= 700
   "  highlight PmenuSel   ctermbg=7      guifg=Black   guibg=Orange               " selected item
   "  highlight PmenuSbar  ctermbg=7      guifg=#CCCCCC guibg=#CCCCCC              " scrollbar
   "  highlight PmenuThumb cterm=reverse  gui=reverse guifg=Black   guibg=#AAAAAA  " thumb of the scrollbar
-endif
 
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " persistent undo
-" The undo files will be stored in $HOME/.cache/vim
-if version >= 703
- " enable persistent-undo
- set undofile
-
- " store the persistent undo file in ~/.cache/vim
- set undodir=~/.cache/vim/
-
- " create undodir directory if possible and does not exist yet
- let targetdir=$HOME . "/.cache/vim"
- if isdirectory(targetdir) != 1 && getftype(targetdir) == "" && exists("*mkdir")
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set undofile
+" store the persistent undo file in ~/.cache/vim
+set undodir=~/.cache/vim/
+" create undodir directory if possible and does not exist yet
+let targetdir=$HOME . "/.cache/vim"
+if isdirectory(targetdir) != 1 && getftype(targetdir) == "" && exists("*mkdir")
   call mkdir(targetdir, "p", 0700)
- endif
 endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Configure terminal title
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set the screen hardstatus to vim(filename.ext)
+if ((&term =~ '^screen') && ($VIM_PLEASE_SET_TITLE =~ '^yes$') || has('gui_running'))
+    set t_ts=k
+    set t_fs=\
+    set title
+    autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
+    let &titleold = fnamemodify(&shell, ":t")
+endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" configure tab
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4
 set shiftwidth=4
 set expandtab
-
 " Automatisches einfügen von tabs nach einrückenung vorheriger Zeile
 set smarttab
-set colorcolumn=80
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tab completion
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function InsertTabWrapper()
   let col = col('.') - 1
   if !col || getline('.')[col - 1] !~ '\k'
@@ -182,23 +162,39 @@ function InsertTabWrapper()
   endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" --------- Split windows
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Split windows
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Easy split window navigation
 " use ALT+navigation key to switch split windows
 nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-h> :wincmd h<CR>
 nmap <silent> <C-l> :wincmd l<CR>
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call pathogen#infect()
 
-"colorscheme solarized
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" UI Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme Tomorrow-Night
+set colorcolumn=80
+set showbreak=↪
+" always show 2 lines at the edges of the screen
+set scrolloff=2
+" set conceal color
+hi Conceal guibg=Black guifg=White
+" highlight hits, when searching
+set hlsearch
+set mouse=a           " Enable mouse usage (all modes) in terminals
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-call togglebg#map("<F5>")
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Gui settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('gui_running')
     set guioptions-=T
     set guioptions-=r
@@ -211,19 +207,10 @@ if has('gui_running')
     "set guifont=DejaVu\ Sans\ Mono\ 10
     set guifont=PragmataPro\ 11
 endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Markdown Conversion
 map <F11> :silent !m %  &<CR> :redraw! <CR>
-
-" CommandT
-nnoremap <silent> <C-p> :CommandT<CR>
-
-"NerdTree
-noremap <silent> <F10> :NERDTreeToggle<CR>
-set wildignore+=*.pyc
-
-nmap <F9> :TagbarToggle<CR>
-
 
 " Save & restore folding state
 au BufWinLeave * silent! mkview
@@ -234,37 +221,44 @@ set wildignore+=*.o,*.obj,.git,*.aux,*.nav,*.out,*.snm,*.toc,*.pdf
 " When saving call make
 au BufWritePost        *.c make
 
-let g:languagetool_jar='/usr/share/java/languagetool/LanguageTool.jar'
-let g:languagetool_lang='de'
-
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:headings'
-        \ ],
-    \ 'sort' : 0,
-    \ }
-
 " Save on focus lost
 au FocusLost * silent! wa
 
-" setup gx
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" setup gx command
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" open firefox
 let g:netrw_browsex_viewer= "firefox"
-
-" set conceal color
-hi Conceal guibg=Black guifg=White
-
-" enable autosave when :make
-set autowrite
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" highlight hits, when searching
-set hlsearch
+" don't jump to failed file when make
+cnoreabbrev <expr> mak ((getcmdtype() is# ':' && getcmdline() is# 'mak')?('make!'):('mak'))
+cnoreabbrev <expr> make ((getcmdtype() is# ':' && getcmdline() is# 'make')?('make!'):('make'))
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                     PLUGINS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CommandT
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <C-p> :CommandT<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"NerdTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+noremap <silent> <F10> :NERDTreeToggle<CR>
+set wildignore+=*.pyc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tabbar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <F9> :TagbarToggle<CR>
 " enable markdown2ctags
 " Add support for markdown files in tagbar.
 let g:tagbar_type_markdown = {
@@ -295,10 +289,12 @@ let g:tagbar_type_mark = {
     \ },
     \ 'sort': 0,
 \ }
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Languagetool
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:languagetool_jar='/usr/share/java/languagetool/LanguageTool.jar'
+let g:languagetool_lang='de'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set linebreak
-set showbreak=↪
-
-" always show 2 lines at the edges of the screen
-set scrolloff=2
