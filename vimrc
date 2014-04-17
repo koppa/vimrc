@@ -194,7 +194,8 @@ set mouse=a           " Enable mouse usage (all modes) in terminals
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Gui settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""n!
+
 if has('gui_running')
     set guioptions-=T
     set guioptions-=r
@@ -209,12 +210,16 @@ if has('gui_running')
 endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Markdown Conversion
+" F11
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <F11> :silent !m %  &<CR> :redraw! <CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Save & restore folding state
-au BufWinLeave * silent! mkview
-au BufWinEnter * silent! loadview
+"" Save & restore folding state
+"au BufWinLeave * silent! mkview
+"au BufWinEnter * silent! loadview
 
 set wildignore+=*.o,*.obj,.git,*.aux,*.nav,*.out,*.snm,*.toc,*.pdf
 
@@ -239,26 +244,33 @@ map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 cnoreabbrev <expr> mak ((getcmdtype() is# ':' && getcmdline() is# 'mak')?('make!'):('mak'))
 cnoreabbrev <expr> make ((getcmdtype() is# ':' && getcmdline() is# 'make')?('make!'):('make'))
 
+
+
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                     PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CommandT
+" open <C-p>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <C-p> :CommandT<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"NerdTree
+" NerdTree
+" open F9
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <silent> <F10> :NERDTreeToggle<CR>
+noremap <silent> <F9> :NERDTreeToggle<CR>
 set wildignore+=*.pyc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tabbar
+" open F10
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <F9> :TagbarToggle<CR>
+nmap <F10> :TagbarToggle<CR>
 " enable markdown2ctags
 " Add support for markdown files in tagbar.
 let g:tagbar_type_markdown = {
