@@ -218,16 +218,13 @@ map <F11> :silent !m %  &<CR> :redraw! <CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "" Save & restore folding state
-"au BufWinLeave * silent! mkview
-"au BufWinEnter * silent! loadview
+au BufWinLeave * silent! mkview
+au BufWinEnter * silent! loadview
 
 set wildignore+=*.o,*.obj,.git,*.aux,*.nav,*.out,*.snm,*.toc,*.pdf
 
-" When saving call make
-au BufWritePost        *.c make
-
 " Save on focus lost
-au FocusLost * silent! wa
+"au FocusLost * silent! wa
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " setup gx command
@@ -310,3 +307,9 @@ let g:languagetool_jar='/usr/share/java/languagetool/LanguageTool.jar'
 let g:languagetool_lang='de'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Clear hightlighting of search
+" <esc><esc>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <esc><esc> :noh<return><esc>"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
