@@ -1,7 +1,6 @@
   set backspace=indent,eol,start        " more powerful backspacing
 
 " Now we set some defaults for the editor
-  set autoindent        " always set autoindenting on
   set linebreak         " Don't wrap words by default
   set textwidth=0       " Don't wrap lines by default
   set nobackup          " Don't keep a backup file
@@ -20,13 +19,6 @@
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
   set background=dark
-
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
-" if has("autocmd")
-"   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-"     \| exe "normal g'\"" | endif
-" endif
 
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
@@ -65,10 +57,6 @@
 " is intended to be a shell prompt) and insert the output in the buffer
   map ,e ^wy$:r!"
 
-" update timestamp
-  iab YDATE <C-R>=strftime("%a %b %d %T %Z %Y")<CR>
-  map ,L  1G/Latest change:\s*/e+1<CR>CYDATE<ESC>
-
 " the shell in a box mode. found in posting by Stefan `Sec` Zehl
 " in newsgroup de.alt.sysadmin.recovery, msg­id:  <df7lhe$2hup$1@ice.42.org>
 " Requires zsh for "print -P $PS1" / replace if needed.
@@ -98,12 +86,6 @@
   " highlight CursorLine   term=reverse   ctermbg=7   guibg=#333333
   " highlight CursorColumn guibg=#333333
 
-  " change inner tag - very useful e.g. within HTML-code!
-  " ci" will remove the text between quotes, also works for ' and `
-  imap <F10> <C-O>cit
-
-  " use the popup menu also when there is only one match:
-  " set completeopt=menuone
   " determine the maximum number of items to show in the popup menu for:
   set pumheight=7
   " set completion highlighting:
@@ -148,6 +130,8 @@ set shiftwidth=4
 set expandtab
 " Automatisches einfügen von tabs nach einrückenung vorheriger Zeile
 set smarttab
+set smartindent
+set autoindent
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -180,7 +164,7 @@ set mouse=a           " Enable mouse usage (all modes) in terminals
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Gui settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""n!
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if has('gui_running')
     set guioptions-=T
@@ -236,7 +220,10 @@ cnoreabbrev <expr> make ((getcmdtype() is# ':' && getcmdline() is# 'make')?('mak
 " unite.vim
 " open <C-p>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <C-p> :Unite file<CR>
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <silent> <C-p> :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NerdTree
@@ -374,7 +361,7 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=python3complete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
