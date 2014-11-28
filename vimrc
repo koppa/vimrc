@@ -207,9 +207,15 @@ map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" make commands
+" Strg + b          build in background
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " don't jump to failed file when make
 cnoreabbrev <expr> mak ((getcmdtype() is# ':' && getcmdline() is# 'mak')?('make!'):('mak'))
 cnoreabbrev <expr> make ((getcmdtype() is# ':' && getcmdline() is# 'make')?('make!'):('make'))
+nnoremap <silent> <C-b> :AsyncMake<CR>
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -275,10 +281,12 @@ let g:languagetool_jar='/usr/share/java/languagetool/LanguageTool.jar'
 let g:languagetool_lang='de'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Clear hightlighting of search
 " <esc><esc>
+"
+" 1) Clear hightlighting of search      :noh
+" 2) Close quickfix                     :ccl
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <esc><esc> :noh<return><esc>"
+nnoremap <silent> <esc><esc> :noh<return>:ccl<return><esc>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
