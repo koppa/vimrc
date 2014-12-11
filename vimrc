@@ -229,6 +229,7 @@ nnoremap <silent> <C-b> :AsyncMake<CR>
 let g:unite_source_history_yank_enable = 1
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <silent> <C-p> :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <silent> <C-o> :<C-u>Unite -no-split -start-insert buffer<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
