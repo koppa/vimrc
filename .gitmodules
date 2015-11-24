@@ -67,3 +67,6 @@
 [submodule "bundle/vim-ipython"]
 	path = bundle/vim-ipython
 	url = git@github.com:koppa/vim-ipython.git
+[submodule "bundle/vim-fetch"]
+	path = bundle/vim-fetch
+	url = git@github.com:kopischke/vim-fetch.git
