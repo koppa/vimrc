@@ -130,7 +130,8 @@ set shiftwidth=4
 set expandtab
 " Automatisches einfügen von tabs nach einrückenung vorheriger Zeile
 set smarttab
-set smartindent
+"set smartindent
+set cindent " hopefully better for python code than smartindent
 set autoindent
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -399,9 +400,9 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
@@ -415,3 +416,6 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+" Autoformat of C & C++ code with C-K
+map <C-K> :py3f ~/.vim/clang-format.py<cr>
