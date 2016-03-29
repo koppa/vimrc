@@ -153,7 +153,6 @@ call pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme Tomorrow-Night
 set colorcolumn=80
-set showbreak=↪
 " always show 2 lines at the edges of the screen
 set scrolloff=2
 " set conceal color
