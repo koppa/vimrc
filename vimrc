@@ -413,7 +413,9 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 " For snippet_complete marker.
 if has('conceal')
-  set conceallevel=2 concealcursor=i
+  set conceallevel=2
+  " set concealcursor=i   % produces some bugs, f.e. when returning from change command
+  set concealcursor=
 endif
 
 " Autoformat of C & C++ code with C-K
