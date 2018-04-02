@@ -130,7 +130,6 @@ set shiftwidth=4
 set expandtab
 " Automatisches einfügen von tabs nach einrückenung vorheriger Zeile
 set smarttab
-"set smartindent
 set cindent " hopefully better for python code than smartindent
 set autoindent
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -200,7 +199,8 @@ set wildignore+=*.o,*.obj,.git,*.aux,*.nav,*.out,*.snm,*.toc,*.pdf
 " setup gx command
 " open firefox
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:netrw_browsex_viewer= "firefox"
+" let g:netrw_browsex_viewer= "firefox"
+let g:netrw_browsex_viewer= "chromium"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -222,15 +222,23 @@ nnoremap <silent> <C-b> :AsyncMake<CR>
 "                     PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" " unite.vim
+" " open <C-p>
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:unite_source_history_yank_enable = 1
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#custom#source('file_rec/async', 'ignore_pattern', 'docs/')
+" nnoremap <silent> <C-p> :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+" nnoremap <silent> <C-o> :<C-u>Unite -no-split -start-insert buffer<cr>
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" unite.vim
+" denite.vim
 " open <C-p>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#custom#source('file_rec/async', 'ignore_pattern', 'docs/')
-nnoremap <silent> <C-p> :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <silent> <C-o> :<C-u>Unite -no-split -start-insert buffer<cr>
+nnoremap <silent> <C-p> :<C-u>Denite file_rec <cr>
+nnoremap <silent> <C-o> :<C-u>Denite buffer<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
