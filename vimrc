@@ -1,4 +1,6 @@
-  set backspace=indent,eol,start        " more powerful backspacing
+set termguicolors
+
+set backspace=indent,eol,start        " more powerful backspacing
 
 " Now we set some defaults for the editor
   set linebreak         " Don't wrap words by default
@@ -150,7 +152,8 @@ call pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " UI Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme Tomorrow-Night
+colorscheme default
+" colorscheme Tomorrow-Night
 set colorcolumn=80
 " always show 2 lines at the edges of the screen
 set scrolloff=2
@@ -199,8 +202,7 @@ set wildignore+=*.o,*.obj,.git,*.aux,*.nav,*.out,*.snm,*.toc,*.pdf
 " setup gx command
 " open firefox
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:netrw_browsex_viewer= "firefox"
-let g:netrw_browsex_viewer= "chromium"
+let g:netrw_browsex_viewer= "firefox"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -237,8 +239,22 @@ nnoremap <silent> <C-b> :AsyncMake<CR>
 " denite.vim
 " open <C-p>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <C-p> :<C-u>Denite file_rec <cr>
+"nnoremap <silent> <C-p> :<C-u>Denite file_rec <cr>
 nnoremap <silent> <C-o> :<C-u>Denite buffer<cr>
+
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+	\ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+
+
+nnoremap <silent> <C-p> :<C-u>Denite
+	\ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'` <CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -428,3 +444,10 @@ endif
 
 " Autoformat of C & C++ code with C-K
 map <C-K> :py3f ~/.vim/clang-format.py<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Random stuff
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Markdown
+let g:vim_markdown_folding_disabled = 1
+
